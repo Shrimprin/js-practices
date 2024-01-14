@@ -6,19 +6,25 @@ newDb(":memory:")
     db = result;
     return run(
       db,
-      "CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR(20) NOT NULL)",
+      "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title VARCHAR(20) UNIQUE NOT NULL)",
     );
   })
-  .then(() => run(db, "INSERT INTO users (name) VALUES (?)", "Alice"))
+  .then(() =>
+    run(db, "INSERT INTO books (title) VALUES (?)", "JavaScript本格入門"),
+  )
   .then((result) => {
     console.log(`ID:${result.lastID}`);
-    return run(db, "INSERT INTO users (name) VALUES (?)", "Bob");
+    return run(
+      db,
+      "INSERT INTO books (title) VALUES (?)",
+      "JavaScriptひらがなプログラミング",
+    );
   })
   .then((result) => {
     console.log(`ID:${result.lastID}`);
-    return all(db, "SELECT * FROM users");
+    return all(db, "SELECT * FROM books");
   })
   .then((result) => {
     console.log(result);
-    run(db, "DROP TABLE users");
+    run(db, "DROP TABLE books");
   });
