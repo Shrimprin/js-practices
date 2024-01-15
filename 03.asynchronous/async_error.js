@@ -10,7 +10,8 @@ await run(
 try {
   await run(db, "INSERT INTO books (title) VALUES (?)", null);
 } catch (error) {
-  console.error(error.message);
+  if (error instanceof Error && error.code === "SQLITE_CONSTRAINT")
+    console.error(error.message);
 }
 
 try {
@@ -19,7 +20,8 @@ try {
     console.log(book);
   });
 } catch (error) {
-  console.error(error.message);
+  if (error instanceof Error && error.code === "SQLITE_ERROR")
+    console.error(error.message);
 }
 
 run(db, "DROP TABLE books");
