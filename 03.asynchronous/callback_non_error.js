@@ -7,31 +7,19 @@ const db = new sqlite3.Database(":memory:", () => {
       db.run(
         "INSERT INTO books (title) VALUES (?)",
         "JavaScript本格入門",
-        () => {
-          db.get(
-            "SELECT id FROM books WHERE title=?",
-            "JavaScript本格入門",
-            (_error, result) => {
-              console.log(`ID:${result.id}`);
-              db.run(
-                "INSERT INTO books (title) VALUES (?)",
-                "JavaScriptひらがなプログラミング",
-                () => {
-                  db.get(
-                    "SELECT id FROM books WHERE title=?",
-                    "JavaScriptひらがなプログラミング",
-                    (_error, result) => {
-                      console.log(`ID:${result.id}`);
-                      db.all("SELECT * FROM books", (_error, users) => {
-                        users.forEach((user) => {
-                          console.log(user);
-                        });
-                        db.run("DROP TABLE books");
-                      });
-                    },
-                  );
-                },
-              );
+        function () {
+          console.log(`ID:${this.lastID}`);
+          db.run(
+            "INSERT INTO books (title) VALUES (?)",
+            "JavaScriptひらがなプログラミング",
+            function () {
+              console.log(`ID:${this.lastID}`);
+              db.all("SELECT * FROM books", (_error, users) => {
+                users.forEach((user) => {
+                  console.log(user);
+                });
+                db.run("DROP TABLE books");
+              });
             },
           );
         },
