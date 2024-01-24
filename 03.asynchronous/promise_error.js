@@ -2,8 +2,8 @@ import { newDb, run, all } from "./sqlite_utils.js";
 
 let db;
 newDb(":memory:")
-  .then((result) => {
-    db = result;
+  .then((memoryDb) => {
+    db = memoryDb;
     return run(
       db,
       "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title TEXT UNIQUE NOT NULL)",
@@ -16,8 +16,8 @@ newDb(":memory:")
     }
     return all(db, "SELECT * FROM nox_exist_table");
   })
-  .then((result) => {
-    console.log(result);
+  .then((books) => {
+    console.log(books);
     run(db, "DROP TABLE books");
   })
   .catch((error) => {

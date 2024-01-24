@@ -10,13 +10,13 @@ const db = new sqlite3.Database(":memory:", () => {
             console.error(error.message);
           }
         }
-        db.get("SELECT * FROM non_exist_table", (error, result) => {
+        db.get("SELECT * FROM non_exist_table", (error, books) => {
           if (error) {
             if (error instanceof Error && error.code === "SQLITE_ERROR") {
               console.error(error.message);
             }
           } else {
-            console.log(result);
+            console.log(books);
           }
           db.run("DROP TABLE books");
         });
