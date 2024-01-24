@@ -6,7 +6,7 @@ newDb(":memory:")
     db = result;
     return run(
       db,
-      "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title VARCHAR(20) UNIQUE NOT NULL)",
+      "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title TEXT UNIQUE NOT NULL)",
     );
   })
   .then(() =>
