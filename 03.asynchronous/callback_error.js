@@ -16,7 +16,9 @@ const db = new sqlite3.Database(":memory:", () => {
               console.error(error.message);
             }
           } else {
-            console.log(books);
+            books.forEach((book) => {
+              console.log(book);
+            });
           }
           db.run("DROP TABLE books");
         });

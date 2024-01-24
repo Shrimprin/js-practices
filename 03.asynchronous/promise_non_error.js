@@ -25,6 +25,8 @@ newDb(":memory:")
     return all(db, "SELECT * FROM books");
   })
   .then((books) => {
-    console.log(books);
+    books.forEach((book) => {
+      console.log(book);
+    });
     run(db, "DROP TABLE books");
   });

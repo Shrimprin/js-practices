@@ -17,7 +17,9 @@ newDb(":memory:")
     return all(db, "SELECT * FROM nox_exist_table");
   })
   .then((books) => {
-    console.log(books);
+    books.forEach((book) => {
+      console.log(book);
+    });
     run(db, "DROP TABLE books");
   })
   .catch((error) => {
