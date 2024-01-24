@@ -11,8 +11,9 @@ newDb(":memory:")
   })
   .then(() => run(db, "INSERT INTO books (title) VALUES (?)", null))
   .catch((error) => {
-    if (error instanceof Error && error.code === "SQLITE_CONSTRAINT")
+    if (error instanceof Error && error.code === "SQLITE_CONSTRAINT") {
       console.error(error.message);
+    }
     return all(db, "SELECT * FROM nox_exist_table");
   })
   .then((result) => {
@@ -20,7 +21,8 @@ newDb(":memory:")
     run(db, "DROP TABLE books");
   })
   .catch((error) => {
-    if (error instanceof Error && error.code === "SQLITE_ERROR")
+    if (error instanceof Error && error.code === "SQLITE_ERROR") {
       console.error(error.message);
+    }
     run(db, "DROP TABLE books");
   });
