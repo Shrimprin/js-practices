@@ -14,9 +14,9 @@ const db = new sqlite3.Database(":memory:", () => {
             "JavaScriptひらがなプログラミング",
             function () {
               console.log(`ID:${this.lastID}`);
-              db.all("SELECT * FROM books", (_error, users) => {
-                users.forEach((user) => {
-                  console.log(user);
+              db.all("SELECT * FROM books", (_error, books) => {
+                books.forEach((book) => {
+                  console.log(book);
                 });
                 db.run("DROP TABLE books");
               });
