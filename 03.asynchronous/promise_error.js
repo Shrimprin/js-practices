@@ -13,6 +13,8 @@ newDb(":memory:")
   .catch((error) => {
     if (error instanceof Error && error.code === "SQLITE_CONSTRAINT") {
       console.error(error.message);
+    } else {
+      throw error;
     }
     return all(db, "SELECT * FROM nox_exist_table");
   })
@@ -25,6 +27,8 @@ newDb(":memory:")
   .catch((error) => {
     if (error instanceof Error && error.code === "SQLITE_ERROR") {
       console.error(error.message);
+    } else {
+      throw error;
     }
     return run(db, "DROP TABLE books");
   });
