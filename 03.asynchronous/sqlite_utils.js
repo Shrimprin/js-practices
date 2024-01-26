@@ -1,9 +1,14 @@
 import sqlite3 from "sqlite3";
 
 export const newDb = (filename) => {
-  return new Promise((resolve) => {
-    const db = new sqlite3.Database(filename);
-    resolve(db);
+  return new Promise((resolve, reject) => {
+    const db = new sqlite3.Database(filename, (error) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(db);
+      }
+    });
   });
 };
 
