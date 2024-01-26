@@ -28,5 +28,5 @@ newDb(":memory:")
     books.forEach((book) => {
       console.log(book);
     });
-    run(db, "DROP TABLE books");
+    return run(db, "DROP TABLE books");
   });
