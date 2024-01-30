@@ -9,15 +9,15 @@ export class Memo {
     this.content = content;
   }
 
-  static async initDb() {
+  static initDb = async () => {
     this.db = await newDb("memo.db");
     await run(
       this.db,
       "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title TEXT NOT NULL, content TEXT NOT NULL)",
     );
-  }
+  };
 
-  async save() {
+  save = async () => {
     try {
       await run(Memo.db, "INSERT INTO memos (title, content) VALUES (?, ?)", [
         this.title,
@@ -26,5 +26,5 @@ export class Memo {
     } catch (error) {
       console.error(error.message);
     }
-  }
+  };
 }
