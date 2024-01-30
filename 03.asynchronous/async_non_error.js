@@ -23,4 +23,4 @@ books.forEach((book) => {
   console.log(book);
 });
 
-run(db, "DROP TABLE books");
+await run(db, "DROP TABLE books");
