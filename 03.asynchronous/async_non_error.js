@@ -10,8 +10,12 @@ await run(
 const titles = ["JavaScript本格入門", "JavaScriptひらがなプログラミング"];
 for (const title of titles) {
   // forEach(async () => {}で書くとトップレベルの次の処理が実行されるため、for ofで記述
-  const book = await run(db, "INSERT INTO books (title) VALUES (?)", title);
-  console.log(`ID: ${book.lastID}`);
+  const queryResult = await run(
+    db,
+    "INSERT INTO books (title) VALUES (?)",
+    title,
+  );
+  console.log(`ID: ${queryResult.lastID}`);
 }
 
 const books = await all(db, "SELECT * FROM books");

@@ -12,16 +12,16 @@ newDb(":memory:")
   .then(() =>
     run(db, "INSERT INTO books (title) VALUES (?)", "JavaScript本格入門"),
   )
-  .then((book) => {
-    console.log(`ID: ${book.lastID}`);
+  .then((queryResult) => {
+    console.log(`ID: ${queryResult.lastID}`);
     return run(
       db,
       "INSERT INTO books (title) VALUES (?)",
       "JavaScriptひらがなプログラミング",
     );
   })
-  .then((book) => {
-    console.log(`ID: ${book.lastID}`);
+  .then((queryResult) => {
+    console.log(`ID: ${queryResult.lastID}`);
     return all(db, "SELECT * FROM books");
   })
   .then((books) => {
