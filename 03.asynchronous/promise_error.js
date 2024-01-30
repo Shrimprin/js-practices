@@ -10,19 +10,19 @@ newDb(":memory:")
     );
   })
   .then(() => run(db, "INSERT INTO books (title) VALUES (?)", null))
+  .then((queryResult) => console.log(`ID: ${queryResult.lastID}`))
   .catch((error) => {
     if (error instanceof Error && error.code === "SQLITE_CONSTRAINT") {
       console.error(error.message);
     } else {
       throw error;
     }
-    return all(db, "SELECT * FROM nox_exist_table");
   })
+  .then(() => all(db, "SELECT * FROM nox_exist_table"))
   .then((books) => {
     books.forEach((book) => {
       console.log(book);
     });
-    return run(db, "DROP TABLE books");
   })
   .catch((error) => {
     if (error instanceof Error && error.code === "SQLITE_ERROR") {
@@ -30,5 +30,7 @@ newDb(":memory:")
     } else {
       throw error;
     }
+  })
+  .then(() => {
     return run(db, "DROP TABLE books");
   });
