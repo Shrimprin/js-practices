@@ -30,4 +30,4 @@ try {
   }
 }
 
-run(db, "DROP TABLE books");
+await run(db, "DROP TABLE books");
