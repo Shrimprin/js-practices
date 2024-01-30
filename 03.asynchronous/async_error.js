@@ -8,7 +8,12 @@ await run(
 );
 
 try {
-  await run(db, "INSERT INTO books (title) VALUES (?)", null);
+  const queryResult = await run(
+    db,
+    "INSERT INTO books (title) VALUES (?)",
+    null,
+  );
+  console.log(`ID: ${queryResult.lastID}`);
 } catch (error) {
   if (error instanceof Error && error.code === "SQLITE_CONSTRAINT") {
     console.error(error.message);
