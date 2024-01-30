@@ -8,12 +8,12 @@ const db = new sqlite3.Database(":memory:", () => {
         "INSERT INTO books (title) VALUES (?)",
         "JavaScript本格入門",
         function () {
-          console.log(`ID:${this.lastID}`);
+          console.log(`ID: ${this.lastID}`);
           db.run(
             "INSERT INTO books (title) VALUES (?)",
             "JavaScriptひらがなプログラミング",
             function () {
-              console.log(`ID:${this.lastID}`);
+              console.log(`ID: ${this.lastID}`);
               db.all("SELECT * FROM books", (_error, books) => {
                 books.forEach((book) => {
                   console.log(book);

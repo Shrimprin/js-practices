@@ -12,7 +12,7 @@ const db = new sqlite3.Database(":memory:", () => {
         ) {
           console.error(error.message);
         } else {
-          console.log(`ID:${this.lastID}`);
+          console.log(`ID: ${this.lastID}`);
         }
         db.all("SELECT * FROM nox_exist_table", (error, books) => {
           if (
