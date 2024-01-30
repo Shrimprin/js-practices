@@ -2,8 +2,8 @@ import { newDb, run, all } from "./sqlite_utils.js";
 
 let db;
 newDb(":memory:")
-  .then((memoryDb) => {
-    db = memoryDb;
+  .then((booksDb) => {
+    db = booksDb;
     return run(
       db,
       "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title TEXT UNIQUE NOT NULL)",
@@ -13,7 +13,7 @@ newDb(":memory:")
     run(db, "INSERT INTO books (title) VALUES (?)", "JavaScript本格入門"),
   )
   .then((book) => {
-    console.log(`ID:${book.lastID}`);
+    console.log(`ID: ${book.lastID}`);
     return run(
       db,
       "INSERT INTO books (title) VALUES (?)",
@@ -21,7 +21,7 @@ newDb(":memory:")
     );
   })
   .then((book) => {
-    console.log(`ID:${book.lastID}`);
+    console.log(`ID: ${book.lastID}`);
     return all(db, "SELECT * FROM books");
   })
   .then((books) => {

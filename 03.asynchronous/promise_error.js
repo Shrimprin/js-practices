@@ -2,8 +2,8 @@ import { newDb, run, all } from "./sqlite_utils.js";
 
 let db;
 newDb(":memory:")
-  .then((memoryDb) => {
-    db = memoryDb;
+  .then((booksDb) => {
+    db = booksDb;
     return run(
       db,
       "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title TEXT UNIQUE NOT NULL)",
