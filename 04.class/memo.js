@@ -13,7 +13,15 @@ export class Memo {
     this.db = await newDb("memo.db");
     await run(
       this.db,
-      "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title TEXT NOT NULL, content TEXT NOT NULL)",
+      "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title TEXT UNIQUE NOT NULL, content TEXT NOT NULL)",
+    );
+  };
+
+  static fetchAll = async () => {
+    const memoRecords = await all(this.db, "SELECT * FROM memos");
+    return memoRecords.map(
+      (memoRecord) =>
+        new Memo(memoRecord.id, memoRecord.title, memoRecord.content),
     );
   };
 

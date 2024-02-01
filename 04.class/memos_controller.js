@@ -16,4 +16,15 @@ export class MemosController {
     const memo = new Memo(id, title, content);
     await memo.save();
   };
+
+  list = async () => {
+    const memos = await Memo.fetchAll();
+    memos.forEach((memo) => {
+      console.log(memo.title);
+    });
+  };
+
+  reference = async () => {};
+
+  delete = async () => {};
 }

@@ -4,7 +4,7 @@ import readline from "readline";
 import { MemosController } from "./memos_controller.js";
 import { program } from "commander";
 
-const interpretCommandInput = () => {
+const interpretCommandInput = async () => {
   program
     .version("0.0.1")
     .option("-l, --list", "List all memos")
@@ -12,19 +12,20 @@ const interpretCommandInput = () => {
     .option("-d, --delete", "Delete selected memo")
     .parse(process.argv);
 
+  const memosController = await MemosController.build();
   const options = program.opts();
   if (options.list) {
-    console.log("list");
+    await memosController.list();
   } else if (options.reference) {
     console.log("reference");
   } else if (options.delete) {
     console.log("delete");
   } else {
-    readStandardInput();
+    readStandardInput(memosController);
   }
 };
 
-const readStandardInput = async () => {
+const readStandardInput = async (memosController) => {
   process.stdin.setEncoding("utf8");
 
   let lines = [];
@@ -38,7 +39,6 @@ const readStandardInput = async () => {
   });
 
   reader.on("close", async () => {
-    const memosController = await MemosController.build();
     await memosController.create(lines);
   });
 };
