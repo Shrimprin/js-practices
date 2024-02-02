@@ -1,7 +1,7 @@
 import sqlite3 from "sqlite3";
 
-export const newDb = (filename) => {
-  return new Promise((resolve, reject) => {
+export const newDb = (filename) =>
+  new Promise((resolve, reject) => {
     const db = new sqlite3.Database(filename, (error) => {
       if (error) {
         reject(error);
@@ -10,7 +10,6 @@ export const newDb = (filename) => {
       }
     });
   });
-};
 
 export const run = (db, sql, params = []) =>
   new Promise((resolve, reject) => {
