@@ -39,4 +39,12 @@ export class Memo {
       console.error(error.message);
     }
   };
+
+  destroy = async () => {
+    try {
+      await run(Memo.db, "DELETE FROM memos where id = ?", this.id);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 }

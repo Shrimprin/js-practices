@@ -41,5 +41,19 @@ export class MemosController {
     console.log(selectedMemo.content);
   };
 
-  delete = async () => {};
+  delete = async () => {
+    const memos = await Memo.fetchAll();
+    const titles = memos.map((memo) => memo.title);
+    const answer = await inquirer.prompt([
+      {
+        type: "list",
+        name: "title",
+        message: "Choose a note you want to delete::",
+        choices: titles,
+      },
+    ]);
+    const selectedTitle = answer.title;
+    const selectedMemo = Memo.findBy("title", selectedTitle, memos);
+    selectedMemo.destroy();
+  };
 }
