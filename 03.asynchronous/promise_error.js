@@ -31,6 +31,4 @@ newDb(":memory:")
       throw error;
     }
   })
-  .then(() => {
-    return run(db, "DROP TABLE books");
-  });
+  .then(() => run(db, "DROP TABLE books"));
