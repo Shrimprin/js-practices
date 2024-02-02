@@ -13,7 +13,7 @@ export class MemosController {
   create = async (lines) => {
     const id = null;
     const title = lines[0];
-    const content = lines.join("¥n");
+    const content = lines.join("\n");
     const memo = new Memo(id, title, content);
     await memo.save();
   };
