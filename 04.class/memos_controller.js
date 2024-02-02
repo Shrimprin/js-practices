@@ -1,4 +1,5 @@
 import { Memo } from "./memo.js";
+import inquirer from "inquirer";
 
 export class MemosController {
   constructor() {}
@@ -24,7 +25,21 @@ export class MemosController {
     });
   };
 
-  reference = async () => {};
+  reference = async () => {
+    const memos = await Memo.fetchAll();
+    const titles = memos.map((memo) => memo.title);
+    const answer = await inquirer.prompt([
+      {
+        type: "list",
+        name: "title",
+        message: "Choose a note you want to see:",
+        choices: titles,
+      },
+    ]);
+    const selectedTitle = answer.title;
+    const selectedMemo = Memo.findBy("title", selectedTitle, memos);
+    console.log(selectedMemo.content);
+  };
 
   delete = async () => {};
 }

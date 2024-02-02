@@ -17,7 +17,7 @@ const interpretCommandInput = async () => {
   if (options.list) {
     await memosController.list();
   } else if (options.reference) {
-    console.log("reference");
+    await memosController.reference();
   } else if (options.delete) {
     console.log("delete");
   } else {

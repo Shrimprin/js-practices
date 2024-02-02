@@ -25,6 +25,10 @@ export class Memo {
     );
   };
 
+  static findBy(key, value, memos = this.fetchAll()) {
+    return memos.find((memo) => memo[key] === value);
+  }
+
   save = async () => {
     try {
       await run(Memo.db, "INSERT INTO memos (title, content) VALUES (?, ?)", [
