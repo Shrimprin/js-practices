@@ -10,7 +10,9 @@ newDb(":memory:")
     );
   })
   .then(() => run(db, "INSERT INTO books (title) VALUES (?)", null))
-  .then((queryResult) => console.log(`ID: ${queryResult.lastID}`))
+  .then((queryResult) => {
+    console.log(`ID: ${queryResult.lastID}`);
+  })
   .catch((error) => {
     if (error instanceof Error && error.code === "SQLITE_CONSTRAINT") {
       console.error(error.message);
