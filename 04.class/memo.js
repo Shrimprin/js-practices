@@ -25,7 +25,8 @@ export class Memo {
     );
   };
 
-  static findBy(key, value, memos = this.fetchAll()) {
+  static async findBy(key, value, memos) {
+    if (!memos) memos = await this.fetchAll();
     return memos.find((memo) => memo[key] === value);
   }
 
