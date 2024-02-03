@@ -41,7 +41,11 @@ export class MemosController {
       const selectedMemo = await this.promptSelectMemo(promptMessage);
       selectedMemo.destroy();
     } catch (error) {
-      console.error(error.message);
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        throw error;
+      }
     }
   };
 

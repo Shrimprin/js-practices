@@ -37,7 +37,11 @@ export class Memo {
         this.content,
       ]);
     } catch (error) {
-      console.error(error.message);
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        throw error;
+      }
     }
   };
 
@@ -45,7 +49,11 @@ export class Memo {
     try {
       await run(Memo.db, "DELETE FROM memos where id = ?", this.id);
     } catch (error) {
-      console.error(error.message);
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        throw error;
+      }
     }
   };
 }
