@@ -21,7 +21,7 @@ const interpretCommandInput = async () => {
   } else if (options.delete) {
     await memosController.delete();
   } else {
-    readStandardInput(memosController);
+    await readStandardInput(memosController);
   }
 };
 
