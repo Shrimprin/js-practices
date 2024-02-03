@@ -26,34 +26,29 @@ export class MemosController {
   };
 
   reference = async () => {
-    const memos = await Memo.fetchAll();
-    const titles = memos.map((memo) => memo.title);
-    const answer = await inquirer.prompt([
-      {
-        type: "list",
-        name: "title",
-        message: "Choose a note you want to see:",
-        choices: titles,
-      },
-    ]);
-    const selectedTitle = answer.title;
-    const selectedMemo = Memo.findBy("title", selectedTitle, memos);
+    const promptMessage = "Choose a note you want to see:";
+    const selectedMemo = await this.promptSelectMemo(promptMessage);
     console.log(selectedMemo.content);
   };
 
   delete = async () => {
+    const promptMessage = "Choose a note you want to delete::";
+    const selectedMemo = await this.promptSelectMemo(promptMessage);
+    selectedMemo.destroy();
+  };
+
+  promptSelectMemo = async (message) => {
     const memos = await Memo.fetchAll();
     const titles = memos.map((memo) => memo.title);
     const answer = await inquirer.prompt([
       {
         type: "list",
         name: "title",
-        message: "Choose a note you want to delete::",
+        message: message,
         choices: titles,
       },
     ]);
     const selectedTitle = answer.title;
-    const selectedMemo = Memo.findBy("title", selectedTitle, memos);
-    selectedMemo.destroy();
+    return Memo.findBy("title", selectedTitle, memos);
   };
 }
