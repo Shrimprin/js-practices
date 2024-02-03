@@ -27,19 +27,28 @@ export class MemosController {
 
   reference = async () => {
     const promptMessage = "Choose a note you want to see:";
-    const selectedMemo = await this.promptSelectMemo(promptMessage);
-    console.log(selectedMemo.content);
+    try {
+      const selectedMemo = await this.promptSelectMemo(promptMessage);
+      console.log(selectedMemo.content);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   delete = async () => {
-    const promptMessage = "Choose a note you want to delete::";
-    const selectedMemo = await this.promptSelectMemo(promptMessage);
-    selectedMemo.destroy();
+    const promptMessage = "Choose a note you want to delete:";
+    try {
+      const selectedMemo = await this.promptSelectMemo(promptMessage);
+      selectedMemo.destroy();
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   promptSelectMemo = async (message) => {
     const memos = await Memo.fetchAll();
     const titles = memos.map((memo) => memo.title);
+    if (!titles.length) throw new Error("Note is nothing.");
     const answer = await inquirer.prompt([
       {
         type: "list",
