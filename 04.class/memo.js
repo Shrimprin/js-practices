@@ -2,12 +2,10 @@ import { newDb, run, all } from "./sqlite_utils.js";
 
 export class Memo {
   static #db;
-  #id;
   #title;
   #content;
 
-  constructor(id, title, content) {
-    this.#id = id;
+  constructor(title, content) {
     this.#title = title;
     this.#content = content;
   }
@@ -31,8 +29,7 @@ export class Memo {
   static fetchAll = async () => {
     const memoRecords = await all(this.#db, "SELECT * FROM memos");
     return memoRecords.map(
-      (memoRecord) =>
-        new Memo(memoRecord.id, memoRecord.title, memoRecord.content),
+      (memoRecord) => new Memo(memoRecord.title, memoRecord.content),
     );
   };
 
@@ -58,7 +55,7 @@ export class Memo {
 
   destroy = async () => {
     try {
-      await run(Memo.#db, "DELETE FROM memos where id = ?", this.#id);
+      await run(Memo.#db, "DELETE FROM memos where title = ?", this.#title);
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);

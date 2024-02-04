@@ -11,10 +11,9 @@ export class MemosController {
   };
 
   create = async (lines) => {
-    const id = null;
     const title = lines[0];
     const content = lines.join("\n");
-    const memo = new Memo(id, title, content);
+    const memo = new Memo(title, content);
     await memo.save();
   };
 
