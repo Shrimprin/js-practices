@@ -2,8 +2,6 @@ import { Memo } from "./memo.js";
 import inquirer from "inquirer";
 
 export class MemosController {
-  constructor() {}
-
   // コンスタラクタではasync/awaitが使えないため、インスタンス生成用のメソッドを定義
   static build = async () => {
     await Memo.initDb();
