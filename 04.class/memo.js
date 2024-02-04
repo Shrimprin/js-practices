@@ -58,7 +58,7 @@ export class Memo {
 
   destroy = async () => {
     try {
-      await run(Memo.#db, "DELETE FROM memos where id = ?", this.id);
+      await run(Memo.#db, "DELETE FROM memos where id = ?", this.#id);
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
