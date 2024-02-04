@@ -28,7 +28,7 @@ export class MemosController {
   reference = async () => {
     const promptMessage = "Choose a note you want to see:";
     try {
-      const selectedMemo = await this.promptSelectMemo(promptMessage);
+      const selectedMemo = await this.#promptSelectMemo(promptMessage);
       console.log(selectedMemo.content);
     } catch (error) {
       console.error(error.message);
@@ -38,7 +38,7 @@ export class MemosController {
   delete = async () => {
     const promptMessage = "Choose a note you want to delete:";
     try {
-      const selectedMemo = await this.promptSelectMemo(promptMessage);
+      const selectedMemo = await this.#promptSelectMemo(promptMessage);
       selectedMemo.destroy();
     } catch (error) {
       if (error instanceof Error) {
@@ -49,7 +49,7 @@ export class MemosController {
     }
   };
 
-  promptSelectMemo = async (message) => {
+  #promptSelectMemo = async (message) => {
     const memos = await Memo.fetchAll();
     const titles = memos.map((memo) => memo.title);
     if (!titles.length) throw new Error("Note is nothing.");
