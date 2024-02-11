@@ -27,7 +27,10 @@ export class Memo {
   };
 
   static fetchAll = async () => {
-    const memoRecords = await all(this.#db, "SELECT * FROM memos");
+    const memoRecords = await all(
+      this.#db,
+      "SELECT * FROM memos order by title",
+    );
     return memoRecords.map(
       (memoRecord) => new Memo(memoRecord.title, memoRecord.content),
     );
