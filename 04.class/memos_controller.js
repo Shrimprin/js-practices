@@ -4,7 +4,7 @@ import inquirer from "inquirer";
 export class MemosController {
   // コンスタラクタではasync/awaitが使えないため、インスタンス生成用のメソッドを定義
   static build = async () => {
-    await Memo.initDb();
+    await Memo.initDb("memo.db");
     return await new MemosController();
   };
 

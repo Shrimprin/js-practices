@@ -18,8 +18,8 @@ export class Memo {
     return this.#content;
   }
 
-  static initDb = async () => {
-    this.#db = await newDb("memo.db");
+  static initDb = async (dbName) => {
+    this.#db = await newDb(dbName);
     await run(
       this.#db,
       "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title TEXT UNIQUE NOT NULL, content TEXT NOT NULL)",
