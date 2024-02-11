@@ -28,7 +28,7 @@ const interpretCommandInput = async () => {
 const readStandardInput = async (memosController) => {
   process.stdin.setEncoding("utf8");
 
-  let lines = [];
+  const lines = [];
   const reader = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
