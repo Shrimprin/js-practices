@@ -36,9 +36,14 @@ export class Memo {
     );
   };
 
-  static findBy = async (key, value, memos) => {
-    if (!memos) memos = await this.fetchAll();
-    return memos.find((memo) => memo[key] === value);
+  static findBy = async (key, value) => {
+    const [memoRecord] = await Memo.all(
+      Memo.#db,
+      `SELECT * from memos where ${key}=? LIMIT 1`,
+      [value],
+    );
+
+    return new Memo(memoRecord.title, memoRecord.content);
   };
 
   save = async () => {

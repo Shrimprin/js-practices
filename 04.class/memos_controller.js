@@ -59,6 +59,6 @@ export class MemosController {
       },
     ]);
     const selectedTitle = answer.title;
-    return Memo.findBy("title", selectedTitle, memos);
+    return await Memo.findBy("title", selectedTitle);
   };
 }
