@@ -49,7 +49,7 @@ export class MemosController {
   #promptSelectMemo = async (message) => {
     const memos = await Memo.fetchAll();
     const titles = memos.map((memo) => memo.title);
-    if (!titles.length) throw new Error("Note is nothing.");
+    if (titles.length <= 0) throw new Error("Note is nothing.");
     const answer = await inquirer.prompt([
       {
         type: "list",
