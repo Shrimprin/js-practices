@@ -1,4 +1,4 @@
-import sqlite3 from "sqlite3";
+import { Database } from "./database.js";
 
 export class Memo {
   static #db;
@@ -19,16 +19,14 @@ export class Memo {
   }
 
   static initDb = async (dbName) => {
-    this.#db = await Memo.newDb(dbName);
-    await Memo.run(
-      this.#db,
+    Memo.#db = await Database.build(dbName);
+    await Memo.#db.run(
       "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title TEXT UNIQUE NOT NULL, content TEXT NOT NULL)",
     );
   };
 
   static fetchAll = async () => {
-    const memoRecords = await Memo.all(
-      this.#db,
+    const memoRecords = await Memo.#db.all(
       "SELECT * FROM memos order by title",
     );
     return memoRecords.map(
@@ -37,8 +35,7 @@ export class Memo {
   };
 
   static findBy = async (key, value) => {
-    const [memoRecord] = await Memo.all(
-      Memo.#db,
+    const [memoRecord] = await Memo.#db.all(
       `SELECT * from memos where ${key}=? LIMIT 1`,
       [value],
     );
@@ -48,11 +45,10 @@ export class Memo {
 
   save = async () => {
     try {
-      await Memo.run(
-        Memo.#db,
-        "INSERT INTO memos (title, content) VALUES (?, ?)",
-        [this.#title, this.#content],
-      );
+      await Memo.#db.run("INSERT INTO memos (title, content) VALUES (?, ?)", [
+        this.#title,
+        this.#content,
+      ]);
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
@@ -64,11 +60,7 @@ export class Memo {
 
   destroy = async () => {
     try {
-      await Memo.run(
-        Memo.#db,
-        "DELETE FROM memos where title = ?",
-        this.#title,
-      );
+      await Memo.#db.run("DELETE FROM memos where title = ?", this.#title);
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
@@ -77,37 +69,4 @@ export class Memo {
       }
     }
   };
-
-  static newDb = (filename) =>
-    new Promise((resolve, reject) => {
-      const db = new sqlite3.Database(filename, (error) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(db);
-        }
-      });
-    });
-
-  static run = (db, sql, params = []) =>
-    new Promise((resolve, reject) => {
-      db.run(sql, params, function (error) {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(this);
-        }
-      });
-    });
-
-  static all = (db, sql, params = []) =>
-    new Promise((resolve, reject) => {
-      db.all(sql, params, (error, rows) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(rows);
-        }
-      });
-    });
 }
