@@ -21,5 +21,14 @@ classDiagram
     +destroy()
   }
 
+  class Database {
+    -db
+    +build$()
+    +newDb$()
+    +run()
+    +all()
+  }
+
   MemoController ..> Memo
+  Memo o-- Database
 ```
